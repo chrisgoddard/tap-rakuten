@@ -1,0 +1,426 @@
+{
+   "# of Cancelled Items":{
+      "slug":"num_of_cancelled_items",
+      "type":"integer"
+   },
+   "# of Clicks":{
+      "slug":"num_of_clicks",
+      "type":"integer"
+   },
+   "# of Impressions":{
+      "slug":"num_of_impressions",
+      "type":"integer"
+   },
+   "# of Items":{
+      "slug":"num_of_items",
+      "type":"integer"
+   },
+   "# of Net Items":{
+      "slug":"num_of_net_items",
+      "type":"integer"
+   },
+   "# of Orders":{
+      "slug":"num_of_orders",
+      "type":"integer"
+   },
+   "Adjusted Commission":{
+      "slug":"adjusted_commission",
+      "type":"number"
+   },
+   "Average Item Value":{
+      "slug":"average_item_value",
+      "type":"number"
+   },
+   "Average Order Value":{
+      "slug":"average_order_value",
+      "type":"number"
+   },
+   "Baseline Commission":{
+      "slug":"baseline_commission",
+      "type":"number"
+   },
+   "Gross Commissions":{
+      "slug":"gross_commissions",
+      "type":"number"
+   },
+   "Gross Sales":{
+      "slug":"gross_sales",
+      "type":"number"
+   },
+   "Gross Total Commissions":{
+      "slug":"gross_total_commissions",
+      "type":"number"
+   },
+   "Publisher Encrypted ID":{
+      "slug":"publisher_encrypted_id",
+      "type":"string"
+   },
+   "Publisher Group ID":{
+      "slug":"publisher_group_id",
+      "type":"string"
+   },
+   "Publisher Group Name":{
+      "slug":"publisher_group_name",
+      "type":"string"
+   },
+   "Publisher ID":{
+      "slug":"publisher_id",
+      "type":"integer"
+   },
+   "Publisher Name":{
+      "slug":"publisher_name",
+      "type":"string"
+   },
+   "Publisher URL":{
+      "slug":"publisher_url",
+      "type":"string"
+   },
+   "Publishers Per Group":{
+      "slug":"publishers_per_group",
+      "type":"integer"
+   },
+   "Quantity":{
+      "slug":"quantity",
+      "type":"integer"
+   },
+   "Sales":{
+      "slug":"sales",
+      "type":"number"
+   },
+   "Total Commission":{
+      "slug":"total_commission",
+      "type":"number"
+   },
+   "Consumer City":{
+      "slug":"consumer_city",
+      "type":"string"
+   },
+   "Consumer Country":{
+      "slug":"consumer_country",
+      "type":"string"
+   },
+   "Consumer Region":{
+      "slug":"consumer_region",
+      "type":"string"
+   },
+   "Item Coupon Code(s)":{
+      "slug":"item_coupon_codes",
+      "type":"string"
+   },
+   "Link ID":{
+      "slug":"link_id",
+      "type":"integer"
+   },
+   "Link Name":{
+      "slug":"link_name",
+      "type":"string"
+   },
+   "Link Size":{
+      "slug":"link_size",
+      "type":"string"
+   },
+   "Link Type":{
+      "slug":"link_type",
+      "type":"string"
+   },
+   "Offer Group ID":{
+      "slug":"offer_group_id",
+      "type":"string"
+   },
+   "Offer ID":{
+      "slug":"offer_id",
+      "type":"integer"
+   },
+   "Offer Name":{
+      "slug":"offer_name",
+      "type":"string"
+   },
+   "Order Coupon Code(s)":{
+      "slug":"order_coupon_codes",
+      "type":"string"
+   },
+   "Order ID":{
+      "slug":"order_id",
+      "type":"string"
+   },
+   "Order Status":{
+      "slug":"order_status",
+      "type":"string"
+   },
+   "Process Date":{
+      "slug":"process_date",
+      "type":"date"
+   },
+   "Product Brand":{
+      "slug":"product_brand",
+      "type":"string"
+   },
+   "Product Category":{
+      "slug":"product_category",
+      "type":"string"
+   },
+   "Product Name":{
+      "slug":"product_name",
+      "type":"string"
+   },
+   "SKU":{
+      "slug":"sku",
+      "type":"string"
+   },
+   "Transaction Date":{
+      "slug":"transaction_date",
+      "type":"date"
+   },
+   "Click IP Address":{
+      "slug":"click_ip_address",
+      "type":"string"
+   },
+   "Customer ID":{
+      "slug":"customer_id",
+      "type":"string"
+   },
+   "Customer Score":{
+      "slug":"customer_score",
+      "type":"string"
+   },
+   "Landing URL":{
+      "slug":"landing_url",
+      "type":"string"
+   },
+   "Referrer URL":{
+      "slug":"referrer_url",
+      "type":"string"
+   },
+   "Ship-To Country":{
+      "slug":"ship_to_country",
+      "type":"string"
+   },
+   "Transaction ID":{
+      "slug":"transaction_id",
+      "type":"string"
+   },
+   "Converting Site Name":{
+      "slug":"converting_site_name",
+      "type":"string"
+   },
+   "Customer Status":{
+      "slug":"customer_status",
+      "type":"string"
+   },
+   "Member ID (U1)":{
+      "slug":"member_id_u1",
+      "type":"string"
+   },
+   "Process Time":{
+      "slug":"process_time",
+      "type":"string"
+   },
+   "Transaction Time":{
+      "slug":"transaction_time",
+      "type":"string"
+   },
+   "Click Through Rate (CTR)":{
+      "slug":"click_through_rate",
+      "type":"number"
+   },
+   "Cost Per Action (CPA)":{
+      "slug":"cost_per_action",
+      "type":"number"
+   },
+   "Earnings Per Click (EPC)":{
+      "slug":"earnings_per_click",
+      "type":"number"
+   },
+   "Net Items Per Order":{
+      "slug":"net_items_per_order",
+      "type":"integer"
+   },
+   "Non-Commissionable Items":{
+      "slug":"non_commissionable_items",
+      "type":"integer"
+   },
+   "Non-Commissionable Sales":{
+      "slug":"non_commissionable_sales",
+      "type":"number"
+   },
+   "Non-Commissionable Order ID":{
+      "slug":"non_commissionable_order_id",
+      "type":"string"
+   },
+   "Non-Commissionable Reason":{
+      "slug":"non_commissionable_reason",
+      "type":"string"
+   },
+   "Commission Status":{
+      "slug":"commission_status",
+      "type":"string"
+   },
+   "Booking Consumed Date":{
+      "slug":"booking_consumed_date",
+      "type":"date"
+   },
+   "Order Ship Date":{
+      "slug":"order_ship_date",
+      "type":"date"
+   },
+   "Process Day of Week":{
+      "slug":"process_day_of_week",
+      "type":"string"
+   },
+   "Process Month":{
+      "slug":"process_month",
+      "type":"string"
+   },
+   "Process Month and Year":{
+      "slug":"process_month_and_year",
+      "type":"string"
+   },
+   "Process Month-Day":{
+      "slug":"process_month_day",
+      "type":"string"
+   },
+   "Process Week Begin Date":{
+      "slug":"process_week_begin_date",
+      "type":"string"
+   },
+   "Process Week End Date":{
+      "slug":"process_week_end_date",
+      "type":"string"
+   },
+   "Process Year":{
+      "slug":"process_year",
+      "type":"string"
+   },
+   "Signature Match Date":{
+      "slug":"signature_match_date",
+      "type":"date"
+   },
+   "Signature Match Time":{
+      "slug":"signature_match_time",
+      "type":"string"
+   },
+   "Transaction Created On Date":{
+      "slug":"transaction_created_on_date",
+      "type":"date"
+   },
+   "Transaction Created On Time":{
+      "slug":"transaction_created_on_time",
+      "type":"string"
+   },
+   "Transaction Day of Week":{
+      "slug":"transaction_day_of_week",
+      "type":"string"
+   },
+   "Transaction Month":{
+      "slug":"transaction_month",
+      "type":"string"
+   },
+   "Transaction Month and Year":{
+      "slug":"transaction_month_and_year",
+      "type":"string"
+   },
+   "Transaction Month-Day":{
+      "slug":"transaction_month_day",
+      "type":"string"
+   },
+   "Transaction Week Begin Date":{
+      "slug":"transaction_week_begin_date",
+      "type":"date"
+   },
+   "Transaction Week End Date":{
+      "slug":"transaction_week_end_date",
+      "type":"date"
+   },
+   "Transaction Year":{
+      "slug":"transaction_year",
+      "type":"string"
+   },
+   "In-Store Address":{
+      "slug":"in_store_address",
+      "type":"string"
+   },
+   "In-Store City":{
+      "slug":"in_store_city",
+      "type":"string"
+   },
+   "In-Store Country":{
+      "slug":"in_store_country",
+      "type":"string"
+   },
+   "In-Store ID":{
+      "slug":"in_store_id",
+      "type":"string"
+   },
+   "In-Store Name":{
+      "slug":"in_store_name",
+      "type":"string"
+   },
+   "In-Store State":{
+      "slug":"in_store_state",
+      "type":"string"
+   },
+   "In-Store Zip Code":{
+      "slug":"in_store_zip_code",
+      "type":"string"
+   },
+   "Item Discount Amount":{
+      "slug":"item_discount_amount",
+      "type":"number"
+   },
+   "Item Profit Margin":{
+      "slug":"item_profit_margin",
+      "type":"number"
+   },
+   "Browser":{
+      "slug":"browser",
+      "type":"string"
+   },
+   "Browser Major Version":{
+      "slug":"browser_major_version",
+      "type":"string"
+   },
+   "Browser Name":{
+      "slug":"browser_name",
+      "type":"string"
+   },
+   "Browser Version":{
+      "slug":"browser_version",
+      "type":"string"
+   },
+   "Consumer Connection Speed":{
+      "slug":"consumer_connection_speed",
+      "type":"string"
+   },
+   "Device":{
+      "slug":"device",
+      "type":"string"
+   },
+   "Mobile Operating System":{
+      "slug":"mobile_operating_system",
+      "type":"string"
+   },
+   "Currency":{
+      "slug":"currency",
+      "type":"string"
+   },
+   "Network":{
+      "slug":"network",
+      "type":"string"
+   },
+   "Network ID":{
+      "slug":"network_id",
+      "type":"string"
+   },
+   "Order Discount Amount":{
+      "slug":"order_discount_amount",
+      "type":"number"
+   },
+   "Orders/Click":{
+      "slug":"orders_per_click",
+      "type":"number"
+   },
+   "Tax Excempt":{
+      "slug":"tax_excempt",
+      "type":"string"
+   }
+}
