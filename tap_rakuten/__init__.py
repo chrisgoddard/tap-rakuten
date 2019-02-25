@@ -2,9 +2,17 @@
 import os
 import json
 import singer
-from singer import utils, metadata
+import singer.metrics as metrics
+import pytz
 
-REQUIRED_CONFIG_KEYS = ["token", "reports"]
+from datetime import datetime, timedelta
+from singer import utils, metadata
+from tap_rakuten.client import Rakuten
+from tap_rakuten.streams import get_stream, get_streams, report_slug_to_name
+from tap_rakuten.sync import sync_stream
+from singer import Transformer
+
+REQUIRED_CONFIG_KEYS = ["token", "reports", "default_start_date"]
 logger = singer.get_logger().getChild('tap-rakuten')
 
 
@@ -12,60 +20,24 @@ def get_abs_path(path):
     return os.path.join(os.path.dirname(os.path.realpath(__file__)), path)
 
 
-# Load schemas from schemas folder
-# def load_schemas():
-#     schemas = {}
-
-#     for filename in os.listdir(get_abs_path('schemas')):
-#         path = get_abs_path('schemas') + '/' + filename
-#         file_raw = filename.replace('.json', '')
-#         with open(path) as file:
-#             schemas[file_raw] = json.load(file)
-
-#     return schemas
-
-
-def discover(config):
+def discover(client, config):
 
     streams = []
 
-    for report in config['reports']:
-        schema_name = report['name']
-        token = report['token']
+    for stream in get_streams(client, config):
 
-        schema = generate_schema(token)
+        stream.load_schema()
 
         catalog_entry = {
-            'stream': schema_name,
-            'tap_stream_id': schema_name,
-            'schema': schema,
-            'metadata' : [],
-            'key_properties': []
+            'stream': stream.name,
+            'tap_stream_id': stream.tap_stream_id,
+            'schema': stream.schema,
+            'metadata': stream.get_metadata(),
         }
+
         streams.append(catalog_entry)
 
-        streams.append()
-
-    # raw_schemas = load_schemas()
-    # streams = []
-
-    # for schema_name, schema in raw_schemas.items():
-
-    #     # TODO: populate any metadata and stream's key properties here..
-    #     stream_metadata = []
-    #     stream_key_properties = []
-
-    #     # create and add catalog entry
-    #     catalog_entry = {
-    #         'stream': schema_name,
-    #         'tap_stream_id': schema_name,
-    #         'schema': schema,
-    #         'metadata' : [],
-    #         'key_properties': []
-    #     }
-    #     streams.append(catalog_entry)
-
-    # return {'streams': streams}
+    return {'streams': streams}
 
 
 def get_selected_streams(catalog):
@@ -84,18 +56,66 @@ def get_selected_streams(catalog):
     return selected_streams
 
 
-def sync(config, state, catalog):
+def get_catalog_entry(catalog, schema_id):
+    for entry in catalog.get('streams', []):
+        if entry['tap_stream_id'] == schema_id:
+            return entry
+    raise Exception('`schema_id`: {} not found in catalog.'.format(schema_id))
+
+
+def valid_arguments(args):
+    allowed_keys = [
+        'start_date',
+        'date_type'
+    ]
+    return {k: v for k, v in args.items() if k in allowed_keys}
+
+
+def sync(client, catalog, state, config):
+
+    client = Rakuten(
+        token=config['token'],
+        region=config['region'],
+        date_type=config['default_date_type']
+    )
 
     selected_stream_ids = get_selected_streams(catalog)
 
-    # Loop over streams in catalog
+    reports = {}
+    for report in config.get('reports', []):
+        reports[report.get('report_slug')] = report
+
     for stream in catalog.streams:
+
         stream_id = stream.tap_stream_id
-        stream_schema = stream.schema
-        if stream_id in selected_stream_ids:
-            # TODO: sync code for stream goes here...
-            logger.info('Syncing stream:' + stream_id)
-    return
+
+        mdata = metadata.to_map(stream.metadata)
+
+        if stream_id not in selected_stream_ids:
+            logger.info("%s: Skipping - not selected", stream_id)
+            continue
+
+        singer.write_schema(
+            stream_id,
+            stream.schema.to_dict(),
+            metadata.get(mdata, (), 'table-key-properties')
+        )
+
+        instance = get_stream(
+            client,
+            config,
+            reports.get(stream.stream)
+        )
+
+        instance.stream = stream
+
+        counter_value = sync_stream(state, instance)
+
+        logger.info(
+            "%s: Completed sync (%s rows)",
+            stream.tap_stream_id,
+            counter_value
+        )
 
 
 @utils.handle_top_exception(logger)
@@ -104,18 +124,29 @@ def main():
     # Parse command line arguments
     args = utils.parse_args(REQUIRED_CONFIG_KEYS)
 
+    client = Rakuten(
+        token=args.config['token'],
+        region=args.config['region'],
+        date_type=args.config['default_date_type']
+    )
+
     # If discover flag was passed, run discovery mode and dump output to stdout
     if args.discover:
-        catalog = discover(args.config)
+        catalog = discover(client, args.config)
         print(json.dumps(catalog, indent=2))
     # Otherwise run in sync mode
     else:
         if args.catalog:
             catalog = args.catalog
         else:
-            catalog =  discover()
+            catalog = discover(client, args.config)
 
-        sync(args.config, args.state, catalog)
+        sync(
+            client,
+            catalog,
+            args.state,
+            args.config
+        )
 
 
 if __name__ == "__main__":
