@@ -2,17 +2,17 @@
 import os
 import json
 import singer
-import singer.metrics as metrics
-import pytz
 
-from datetime import datetime, timedelta
 from singer import utils, metadata
 from tap_rakuten.client import Rakuten
-from tap_rakuten.streams import get_stream, get_streams, report_slug_to_name
+from tap_rakuten.streams import get_stream, get_streams
 from tap_rakuten.sync import sync_stream
-from singer import Transformer
 
-REQUIRED_CONFIG_KEYS = ["token", "reports", "default_start_date"]
+REQUIRED_CONFIG_KEYS = [
+    "token", "region", "reports",
+    "default_start_date", "default_date_type"
+]
+
 logger = singer.get_logger().getChild('tap-rakuten')
 
 
