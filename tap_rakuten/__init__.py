@@ -16,10 +16,6 @@ REQUIRED_CONFIG_KEYS = [
 logger = singer.get_logger().getChild('tap-rakuten')
 
 
-def get_abs_path(path):
-    return os.path.join(os.path.dirname(os.path.realpath(__file__)), path)
-
-
 def discover(client, config):
     """
     Discover availalbe streams from provided configuration.
@@ -119,6 +115,7 @@ def main():
     if args.discover:
         catalog = discover(client, args.config)
         print(json.dumps(catalog, indent=2))
+
     # Otherwise run in sync mode
     else:
         if args.catalog:
