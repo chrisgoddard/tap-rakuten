@@ -1,17 +1,9 @@
 #!/usr/bin/env python
 import singer
+from tap_rakuten.utilities import to_utc, report_slug_to_name
 from singer import metadata
 from singer import utils
 from datetime import datetime, timedelta
-import pytz
-
-
-def to_utc(dtime):
-    return dtime.replace(tzinfo=pytz.UTC)
-
-
-def report_slug_to_name(slug):
-    return slug.replace('-', '_').lower()
 
 
 class Stream():
@@ -27,7 +19,7 @@ class Stream():
         self.name = stream_config.get('report_slug')
         self.tap_stream_id = report_slug_to_name(self.name)
         self.client = client
-        self.utcnow = datetime.utcnow().replace(tzinfo=pytz.UTC)
+        self.utcnow = utils.now()
         self.start_date = stream_config.get('start_date')
         self.date_type = stream_config.get('date_type')
 
@@ -96,10 +88,11 @@ class Stream():
         return metadata.to_list(mdata)
 
     def get_bookmark(self, state):
-        return singer.get_bookmark(state, self.name, "last_sync")
+        return singer.get_bookmark(state, self.tap_stream_id, "last_sync")
 
     def sync(self, state):
         bookmark = self.get_bookmark(state)
+
         if not bookmark:
             bookmark = self.start_date
 
