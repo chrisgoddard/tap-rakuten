@@ -1,9 +1,16 @@
 {
+  "region": "en",
+  "token": "",
+  "default_date_type": "transaction",
+  "default_start_date": "2019-01-01T00:00:00Z",
   "reports": [
-    {
-        "name": "report_name",
-        "token": "xxxxxxx",
-        "start_date": "2018-01-01"
-    }
+      {
+          "report_slug": "report-slug",
+      },
+      {
+          "report_slug": "report-slug",
+          "date_type": "process",
+          "start_date": "2019-02-01T00:00:00Z"
+      }
   ]
 }
