@@ -6,12 +6,9 @@ spec](https://github.com/singer-io/getting-started/blob/master/SPEC.md).
 
 This tap:
 
-- Pulls raw data from [FIXME](http://example.com)
-- Extracts the following resources:
-  - [FIXME](http://example.com)
+- Pulls raw data from the Rakuten reporting API.
+- Rakuten reports are configured within Rakuten and then accessible via an API endpoint.
 - Outputs the schema for each resource
 - Incrementally pulls data based on the input state
 
 ---
-
-Copyright &copy; 2018 Stitch
