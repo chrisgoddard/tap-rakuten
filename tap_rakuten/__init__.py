@@ -21,7 +21,10 @@ def get_abs_path(path):
 
 
 def discover(client, config):
-
+    """
+    Discover availalbe streams from provided configuration.
+    Schema is generated dynamically based on returned column names.
+    """
     streams = []
 
     for stream in get_streams(client, config):
@@ -41,11 +44,11 @@ def discover(client, config):
 
 
 def get_selected_streams(catalog):
-    '''
+    """
     Gets selected streams.  Checks schema's 'selected' first (legacy)
     and then checks metadata (current), looking for an empty breadcrumb
     and mdata with a 'selected' entry
-    '''
+    """
     selected_streams = []
     for stream in catalog.streams:
         stream_metadata = metadata.to_map(stream.metadata)
@@ -56,28 +59,10 @@ def get_selected_streams(catalog):
     return selected_streams
 
 
-def get_catalog_entry(catalog, schema_id):
-    for entry in catalog.get('streams', []):
-        if entry['tap_stream_id'] == schema_id:
-            return entry
-    raise Exception('`schema_id`: {} not found in catalog.'.format(schema_id))
-
-
-def valid_arguments(args):
-    allowed_keys = [
-        'start_date',
-        'date_type'
-    ]
-    return {k: v for k, v in args.items() if k in allowed_keys}
-
-
 def sync(client, catalog, state, config):
-
-    client = Rakuten(
-        token=config['token'],
-        region=config['region'],
-        date_type=config['default_date_type']
-    )
+    """
+    Sync streams.
+    """
 
     selected_stream_ids = get_selected_streams(catalog)
 
