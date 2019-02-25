@@ -2,21 +2,17 @@
 import singer
 import requests
 import json
-import os
 import csv
 import pytz
 
+from tap_rakuten.utilities import get_abs_path
 from datetime import datetime, timedelta
 from singer.utils import DATETIME_FMT_SAFE
 
 logger = singer.get_logger().getChild('tap-rakuten')
 
 
-def get_abs_path(path):
-    return os.path.join(os.path.dirname(os.path.realpath(__file__)), path)
-
-
-with open(get_abs_path('field_types.json')) as f:
+with open(get_abs_path('field_types.json', __file__)) as f:
     FIELD_TYPE_REFERENCE = json.load(f)
 
 
