@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 import singer
 import requests
 import json

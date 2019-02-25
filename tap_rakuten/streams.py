@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import singer
 from singer import metadata
 from singer import utils
