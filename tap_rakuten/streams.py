@@ -116,14 +116,7 @@ class Stream():
             singer.write_state(state)
 
 
-def get_stream(client, config, report):
-    defaults = {
-        'start_date': config.get('default_start_date'),
-        'date_type': config.get('default_date_type')
-    }
-    return Stream(client, {**defaults, **report})
 
+def get_stream(client, config):
 
-def get_streams(client, config):
-    for report in config.get('reports', []):
-        yield get_stream(client, config, report)
+    return Stream(client, config)

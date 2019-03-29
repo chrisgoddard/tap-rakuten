@@ -5,12 +5,12 @@ import singer
 
 from singer import utils, metadata
 from tap_rakuten.client import Rakuten
-from tap_rakuten.streams import get_stream, get_streams
+from tap_rakuten.streams import get_stream
 from tap_rakuten.sync import sync_stream
 
 REQUIRED_CONFIG_KEYS = [
-    "token", "region", "reports",
-    "default_start_date", "default_date_type"
+    "token", "region", "report_slug",
+    "start_date", "date_type"
 ]
 
 logger = singer.get_logger().getChild('tap-rakuten')
@@ -21,20 +21,23 @@ def discover(client, config):
     Discover availalbe streams from provided configuration.
     Schema is generated dynamically based on returned column names.
     """
+
+    # modified from supporting multiple reports to just one report at a time
+
     streams = []
 
-    for stream in get_streams(client, config):
+    stream = get_stream(client, config)
 
-        stream.load_schema()
+    stream.load_schema()
 
-        catalog_entry = {
-            'stream': stream.name,
-            'tap_stream_id': stream.tap_stream_id,
-            'schema': stream.schema,
-            'metadata': stream.get_metadata(),
-        }
+    catalog_entry = {
+        'stream': stream.name,
+        'tap_stream_id': stream.tap_stream_id,
+        'schema': stream.schema,
+        'metadata': stream.get_metadata(),
+    }
 
-        streams.append(catalog_entry)
+    streams.append(catalog_entry)
 
     return {'streams': streams}
 
@@ -84,8 +87,7 @@ def sync(client, catalog, state, config):
 
         instance = get_stream(
             client,
-            config,
-            reports.get(stream.stream)
+            config
         )
 
         instance.stream = stream
@@ -108,7 +110,7 @@ def main():
     client = Rakuten(
         token=args.config['token'],
         region=args.config['region'],
-        date_type=args.config['default_date_type']
+        date_type=args.config['date_type']
     )
 
     # If discover flag was passed, run discovery mode and dump output to stdout

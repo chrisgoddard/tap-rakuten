@@ -25,23 +25,12 @@ Because the schema of the report is configured within Rakuten itself, this tap d
 {
   "region": "en",
   "token": "xxxxxxx",
-  "default_date_type": "transaction",
-  "default_start_date": "2019-01-01T00:00:00Z",
-  "reports": [
-      {
-          "report_slug": "report-slug",
-      },
-      {
-          "report_slug": "report-slug",
-          "date_type": "process",
-          "start_date": "2019-02-01T00:00:00Z"
-      }
-  ]
+  "date_type": "transaction",
+  "start_date": "2019-01-01T00:00:00Z",
+  "report_slug": "report-slug"
 }
 
 ```
-
-Multiple reports can be synced by defining them as objects in the "reports" array. The only required field within an report is the "report_slug", which is the name of the report as it appears in the "Get API" pop up.
 
 Additionally, the region should be set to how it appears in this URL - though 
 
@@ -49,4 +38,36 @@ Additionally, the region should be set to how it appears in this URL - though
 https://ran-reporting.rakutenmarketing.com/{region}/reports/{report_slug}/filters?date_range=...
 ```
 
-Additionally, the region is
+### Discovery mode
+
+This command returns a JSON that describes the schema of each table.
+
+```
+$ tap-rakuten --config config.json --discover
+```
+
+To save this to `catalog.json`:
+
+```
+$ tap-rakuten --config config.json --discover > catalog.json
+```
+
+
+### Sync Mode
+
+With an annotated `catalog.json`, the tap can be invoked in sync mode:
+
+```
+$ tap-rakuten --config config.json --catalog catalog.json
+```
+
+Messages are written to standard output following the Singer specification. The resultant stream of JSON data can be consumed by a Singer target.
+
+
+## Replication Methods and State File
+
+Use the following command to pipe tap into your Singer target of choice and update the state file in one go.
+
+```
+tap-rakuten --config config.json --catalog catalog.json --state state.json | target > state.json.tmp && tail -1 state.json.tmp > state.json
+```
